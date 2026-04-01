@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChromaCraft Paints — Premium Paint Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #111010;
+    --ink-soft: #2a2828;
+    --ember: #E85D04;
+    --ember-light: #FF7A1A;
+    --ember-dim: rgba(232,93,4,0.12);
+    --stone: #F5F3F0;
+    --stone-mid: #E8E4DF;
+    --chalk: #FAF9F7;
+    --mist: #8A8580;
+    --white: #ffffff;
+    --radius: 16px;
+    --shadow-sm: 0 2px 12px rgba(17,16,16,0.08);
+    --shadow-md: 0 8px 32px rgba(17,16,16,0.12);
+    --shadow-lg: 0 24px 64px rgba(17,16,16,0.16);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--chalk);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(250,249,247,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--stone-mid);
+    transition: all .3s ease;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--ember); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: .875rem; font-weight: 500; color: var(--ink-soft);
+    text-decoration: none; letter-spacing: .01em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--ember); }
+  .nav-cta {
+    background: var(--ink); color: var(--white);
+    border: none; border-radius: 50px;
+    padding: 10px 22px; font-size: .875rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--ember); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 120px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 75% 50%, rgba(232,93,4,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(232,93,4,.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 900px; text-align: center;
+    animation: heroFade .9s ease both;
+  }
+  @keyframes heroFade {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ember-dim); border: 1px solid rgba(232,93,4,.25);
+    border-radius: 50px; padding: 6px 16px;
+    font-size: .8rem; font-weight: 500; color: var(--ember-light);
+    letter-spacing: .04em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-badge::before { content:''; width:6px; height:6px; background:var(--ember); border-radius:50%; }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 1.05; letter-spacing: -.04em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  h1 em { color: var(--ember); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(1rem, 1.5vw, 1.15rem); font-weight: 300;
+    color: rgba(255,255,255,.6); line-height: 1.7;
+    max-width: 560px; margin: 0 auto 44px;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ember); color: var(--white);
+    border: none; border-radius: 50px;
+    padding: 15px 32px; font-size: .95rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 8px 28px rgba(232,93,4,.4);
+    transition: transform .2s, box-shadow .2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(232,93,4,.5); }
+  .btn-outline {
+    background: transparent; color: rgba(255,255,255,.8);
+    border: 1px solid rgba(255,255,255,.2); border-radius: 50px;
+    padding: 14px 32px; font-size: .95rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: border-color .2s, color .2s, background .2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: clamp(28px, 5vw, 64px);
+    margin-top: 72px; padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    animation: heroFade 1s .3s ease both;
+  }
+  .stat-val {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--white);
+    letter-spacing: -.03em;
+  }
+  .stat-val span { color: var(--ember); }
+  .stat-label { font-size: .8rem; color: rgba(255,255,255,.4); margin-top: 4px; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* SECTIONS */
+  section { padding: clamp(72px, 8vw, 120px) 5vw; }
+  .section-label {
+    font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ember);
+    margin-bottom: 14px; display: block;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -.03em; line-height: 1.1;
+    color: var(--ink);
+  }
+  .section-title em { color: var(--ember); font-style: normal; }
+
+  /* ABOUT */
+  #about { background: var(--chalk); }
+  .about-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px); align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-frame {
+    width: 100%; padding-bottom: 110%;
+    border-radius: 24px; overflow: hidden;
+    background: var(--ink);
+    position: relative;
+  }
+  .about-img-inner {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, #1a1a1a 0%, #2d2318 50%, #1a1208 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-paint-art {
+    width: 80%; height: 80%;
+    position: relative;
+  }
+  .paint-blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(1px);
+  }
+  .b1 { width: 55%; height: 55%; background: var(--ember); top: 10%; left: 5%; opacity: .9; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+  .b2 { width: 40%; height: 40%; background: #FF9A3C; top: 30%; right: 10%; opacity: .85; border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%; }
+  .b3 { width: 30%; height: 30%; background: #FFB347; bottom: 20%; left: 30%; opacity: .7; border-radius: 50% 30% 60% 40% / 40% 60% 30% 60%; }
+  .about-float {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--white); border-radius: 20px;
+    padding: 20px 24px; box-shadow: var(--shadow-lg);
+    min-width: 180px;
+  }
+  .float-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2rem; color: var(--ember); letter-spacing: -.04em;
+  }
+  .float-label { font-size: .8rem; color: var(--mist); margin-top: 2px; }
+  .about-text { }
+  .about-text .section-title { margin-bottom: 20px; }
+  .about-text p { color: var(--mist); line-height: 1.8; font-size: .975rem; margin-bottom: 16px; }
+  .about-features { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .about-features li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: .9rem; font-weight: 500; color: var(--ink-soft);
+  }
+  .feat-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--ember-dim); display: grid; place-items: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+
+  /* SERVICES */
+  #services { background: var(--stone); }
+  .services-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    max-width: 1200px; margin: 0 auto 52px; flex-wrap: wrap; gap: 16px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .svc-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 32px; box-shadow: var(--shadow-sm);
+    border: 1px solid transparent;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    cursor: default;
+  }
+  .svc-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--ember); }
+  .svc-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--ink); display: grid; place-items: center;
+    font-size: 1.4rem; margin-bottom: 22px;
+  }
+  .svc-card:hover .svc-icon { background: var(--ember); }
+  .svc-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.1rem; color: var(--ink); margin-bottom: 10px;
+  }
+  .svc-desc { font-size: .875rem; color: var(--mist); line-height: 1.7; }
+  .svc-card:hover .svc-title { color: var(--ember); }
+
+  /* BRANDS */
+  #brands { background: var(--chalk); }
+  .brands-inner { max-width: 1100px; margin: 0 auto; }
+  .brands-head { text-align: center; margin-bottom: 52px; }
+  .brands-head .section-label { display: block; text-align: center; }
+  .brands-track-wrap { overflow: hidden; }
+  .brands-track {
+    display: flex; gap: 20px;
+    animation: scroll 22s linear infinite;
+    width: max-content;
+  }
+  .brands-track:hover { animation-play-state: paused; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .brand-pill {
+    flex-shrink: 0;
+    background: var(--white); border: 1px solid var(--stone-mid);
+    border-radius: 50px; padding: 14px 30px;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .9rem; color: var(--ink-soft); letter-spacing: .02em;
+    transition: border-color .2s, color .2s, box-shadow .2s;
+    white-space: nowrap;
+  }
+  .brand-pill:hover { border-color: var(--ember); color: var(--ember); box-shadow: 0 4px 16px rgba(232,93,4,.15); }
+  .brands-logos {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px; margin-top: 40px;
+  }
+  .brand-card {
+    background: var(--white); border: 1px solid var(--stone-mid);
+    border-radius: var(--radius); padding: 28px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    transition: box-shadow .2s, border-color .2s, transform .2s;
+    cursor: default;
+  }
+  .brand-card:hover { border-color: var(--ember); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+  .brand-dot {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 1.3rem;
+  }
+  .brand-name {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .85rem; color: var(--ink); letter-spacing: .02em;
+  }
+  .brand-type { font-size: .75rem; color: var(--mist); }
+
+  /* CONTACT */
+  #contact { background: var(--ink); }
+  .contact-wrap {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px); align-items: start;
+  }
+  .contact-left .section-title { color: var(--white); margin-bottom: 20px; }
+  .contact-left .section-label { }
+  .contact-left p { color: rgba(255,255,255,.5); line-height: 1.8; font-size: .975rem; margin-bottom: 40px; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .c-info-row { display: flex; align-items: flex-start; gap: 14px; }
+  .c-info-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: rgba(255,255,255,.06); display: grid; place-items: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .c-info-label { font-size: .75rem; color: rgba(255,255,255,.35); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
+  .c-info-val { font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.8); }
+  .contact-right {
+    background: var(--chalk); border-radius: 24px;
+    padding: clamp(28px, 4vw, 44px);
+  }
+  .form-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.3rem; color: var(--ink); margin-bottom: 28px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .form-group label { font-size: .8rem; font-weight: 500; color: var(--mist); letter-spacing: .04em; }
+  .form-group input, .form-group textarea, .form-group select {
+    background: var(--white); border: 1.5px solid var(--stone-mid);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: .875rem; font-family: 'DM Sans', sans-serif;
+    color: var(--ink); outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--ember); box-shadow: 0 0 0 3px rgba(232,93,4,.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-actions { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+  .btn-submit {
+    background: var(--ember); color: var(--white);
+    border: none; border-radius: 50px;
+    padding: 13px 28px; font-size: .875rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 6px 20px rgba(232,93,4,.35);
+    transition: transform .2s, box-shadow .2s;
+    flex: 1; min-width: 140px;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,93,4,.45); }
+  .btn-whatsapp {
+    display: flex; align-items: center; gap: 8px;
+    background: #25D366; color: var(--white);
+    border: none; border-radius: 50px;
+    padding: 13px 24px; font-size: .875rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: transform .2s, box-shadow .2s;
+    text-decoration: none; box-shadow: 0 6px 20px rgba(37,211,102,.3);
+    flex: 1; min-width: 140px; justify-content: center;
+  }
+  .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,.4); }
+  .wa-icon { font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer {
+    background: #0a0909; padding: 28px 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.1rem; color: var(--white); text-decoration: none;
+  }
+  .footer-logo span { color: var(--ember); }
+  .footer-copy { font-size: .8rem; color: rgba(255,255,255,.3); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: .8rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--ember); }
+
+  /* FLOATING WA */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25D366; display: grid; place-items: center;
+    text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,.45);
+    font-size: 1.5rem; transition: transform .2s, box-shadow .2s;
+    animation: waPop .5s 1.5s ease both;
+  }
+  @keyframes waPop { from { transform: scale(0); } to { transform: scale(1); } }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(37,211,102,.55); }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: var(--chalk); flex-direction: column;
+    align-items: center; justify-content: center; gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.8rem; color: var(--ink); text-decoration: none;
+    transition: color .2s;
+  }
+  .mobile-menu a:hover { color: var(--ember); }
+  .close-menu {
+    position: absolute; top: 24px; right: 24px;
+    font-size: 1.5rem; cursor: pointer; background: none; border: none;
+    color: var(--ink);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .about-wrap, .contact-wrap { grid-template-columns: 1fr; }
+    .about-float { right: 0; bottom: -12px; }
+    nav .nav-links, nav .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .form-row { grid-template-columns: 1fr; }
+    .brands-logos { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 540px) {
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .brands-logos { grid-template-columns: repeat(2, 1fr); }
+    .footer { flex-direction: column; text-align: center; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#"><span>Chroma</span>Craft</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Get a Quote</a>
+  <div class="hamburger" id="burger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#brands" onclick="closeMobile()">Brands</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Trusted Since 2009</div>
+    <h1>Premium Paints for <em>Every</em> Surface & Vision</h1>
+    <p class="hero-sub">From walls to industrial coatings — we deliver colour, quality, and craftsmanship that lasts decades.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-outline">Get a Free Quote</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">15<span>+</span></div>
+        <div class="stat-label">Years in Business</div>
+      </div>
+      <div>
+        <div class="stat-val">2<span>k+</span></div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div>
+        <div class="stat-val">30<span>+</span></div>
+        <div class="stat-label">Premium Brands</div>
+      </div>
+      <div>
+        <div class="stat-val">98<span>%</span></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-visual reveal">
+      <div class="about-img-frame">
+        <div class="about-img-inner">
+          <div class="about-paint-art">
+            <div class="paint-blob b1"></div>
+            <div class="paint-blob b2"></div>
+            <div class="paint-blob b3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-float">
+        <div class="float-num">30+</div>
+        <div class="float-label">Premium Paint Brands</div>
+      </div>
+    </div>
+    <div class="about-text reveal reveal-delay-1">
+      <span class="section-label">Who We Are</span>
+      <h2 class="section-title">Colour is Our <em>Craft</em>, Quality is Our Promise</h2>
+      <p>ChromaCraft Paints has been the go-to destination for homeowners, architects, and contractors since 2009. We don't just sell paint — we provide complete colour solutions backed by expert guidance.</p>
+      <p>Our team of trained colour consultants helps you pick the perfect shade, finish, and product for every surface, ensuring results that look stunning and stand the test of time.</p>
+      <ul class="about-features">
+        <li><div class="feat-icon">🎨</div> Expert colour consultation — free of charge</li>
+        <li><div class="feat-icon">🏠</div> Interior, exterior & industrial solutions</li>
+        <li><div class="feat-icon">⚡</div> Same-day delivery available in the city</li>
+        <li><div class="feat-icon">✅</div> Certified dealers for all major paint brands</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-head reveal">
+    <div>
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">End-to-End <em>Paint</em> Solutions</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-icon">🏡</div>
+      <div class="svc-title">Interior Paints</div>
+      <p class="svc-desc">Premium washable emulsions, texture finishes, and specialty coatings for every interior space — living rooms to kitchens.</p>
+    </div>
+    <div class="svc-card reveal reveal-delay-1">
+      <div class="svc-icon">🌦️</div>
+      <div class="svc-title">Exterior Coatings</div>
+      <p class="svc-desc">Weather-resistant, UV-stable exterior paints engineered to protect your building's facade through harsh Indian climate conditions.</p>
+    </div>
+    <div class="svc-card reveal reveal-delay-2">
+      <div class="svc-icon">🏗️</div>
+      <div class="svc-title">Industrial Paints</div>
+      <p class="svc-desc">Anti-corrosion, heat-resistant, and epoxy coatings for factories, warehouses, and heavy-duty infrastructure projects.</p>
+    </div>
+    <div class="svc-card reveal reveal-delay-3">
+      <div class="svc-icon">🎨</div>
+      <div class="svc-title">Colour Consultation</div>
+      <p class="svc-desc">Work one-on-one with our expert consultants to visualize your dream space with professional colour matching technology.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon">🪟</div>
+      <div class="svc-title">Wood & Metal Finishes</div>
+      <p class="svc-desc">High-performance wood stains, varnishes, and metal primers that protect furniture and structural elements beautifully.</p>
+    </div>
+    <div class="svc-card reveal reveal-delay-1">
+      <div class="svc-icon">🚚</div>
+      <div class="svc-title">Bulk Supply & Delivery</div>
+      <p class="svc-desc">Contractor-friendly bulk ordering with doorstep delivery, project estimation, and dedicated account management.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="brands-inner">
+    <div class="brands-head reveal">
+      <span class="section-label">Our Partners</span>
+      <h2 class="section-title">Authorized Dealers of <em>Top Brands</em></h2>
+    </div>
+    <div class="brands-logos reveal reveal-delay-1">
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#FDEBD0;">🟠</div>
+        <div class="brand-name">Asian Paints</div>
+        <div class="brand-type">Interior & Exterior</div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#D5E8F5;">🔵</div>
+        <div class="brand-name">Berger</div>
+        <div class="brand-type">Premium Coatings</div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#E8F8E8;">🟢</div>
+        <div class="brand-name">Dulux</div>
+        <div class="brand-type">Colour Expertise</div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#FDF2D0;">🟡</div>
+        <div class="brand-name">Nerolac</div>
+        <div class="brand-type">Industrial & Home</div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#F5D5D5;">🔴</div>
+        <div class="brand-name">Indigo</div>
+        <div class="brand-type">Designer Finishes</div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-dot" style="background:#E8D5F5;">🟣</div>
+        <div class="brand-name">Nippon</div>
+        <div class="brand-type">Advanced Coatings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left reveal">
+      <span class="section-label">Reach Out</span>
+      <h2 class="section-title" style="color:var(--white);">Let's Bring Your <em>Vision</em> to Life</h2>
+      <p>Whether it's a single room refresh or a full building project, we're ready to help. Get in touch for pricing, availability, or expert advice.</p>
+      <div class="contact-info">
+        <div class="c-info-row">
+          <div class="c-info-icon">📍</div>
+          <div>
+            <div class="c-info-label">Address</div>
+            <div class="c-info-val">42, Main Road, Udupi, Karnataka 576101</div>
+          </div>
+        </div>
+        <div class="c-info-row">
+          <div class="c-info-icon">📞</div>
+          <div>
+            <div class="c-info-label">Phone</div>
+            <div class="c-info-val">+91 98765 43210</div>
+          </div>
+        </div>
+        <div class="c-info-row">
+          <div class="c-info-icon">🕐</div>
+          <div>
+            <div class="c-info-label">Working Hours</div>
+            <div class="c-info-val">Mon – Sat: 9:00 AM – 7:30 PM</div>
+          </div>
+        </div>
+        <div class="c-info-row">
+          <div class="c-info-icon">✉️</div>
+          <div>
+            <div class="c-info-label">Email</div>
+            <div class="c-info-val">hello@chromacraft.in</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right reveal reveal-delay-1">
+      <div class="form-title">Send Us a Message</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>FULL NAME</label>
+          <input type="text" placeholder="Ravi Kumar">
+        </div>
+        <div class="form-group">
+          <label>PHONE</label>
+          <input type="tel" placeholder="+91 XXXXX XXXXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>SERVICE REQUIRED</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Interior Paints</option>
+          <option>Exterior Coatings</option>
+          <option>Industrial Paints</option>
+          <option>Colour Consultation</option>
+          <option>Wood & Metal Finishes</option>
+          <option>Bulk Supply</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>MESSAGE</label>
+        <textarea placeholder="Tell us about your project..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-submit">Send Message</button>
+        <a href="https://wa.me/919876543210" class="btn-whatsapp" target="_blank">
+          <span class="wa-icon">💬</span> WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="#"><span>Chroma</span>Craft Paints</a>
+  <p class="footer-copy">© 2025 ChromaCraft Paints. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/919876543210" class="wa-float" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+  // Mobile Menu
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.add('open'));
+  closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+      window.scrollY > 20 ? '0 4px 24px rgba(17,16,16,.1)' : 'none';
+  });
+</script>
+</body>
+</html>
